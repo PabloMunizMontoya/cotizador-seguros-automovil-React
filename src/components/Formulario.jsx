@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import styled from '@emotion/styled'
+import { obtenerDiferencia } from '../../src/helper'
 
 //5. creamos los componentes de estilo para los div
 const Campo = styled.div`
@@ -73,13 +74,39 @@ const Fromulario = () => {
     const cotizarSeguro = e => {
         e.preventDefault()
 
-        //validamos
+        //12.2 validamos
         if (marca.trim() === ''|| year.trim() === '' || plan.trim() === '') {
             guardarError(true)
             return
         }
-
         guardarError(false)
+
+        // precio base del seguro, le damos un let por que este valor base va a ir cambiando, también por eso se llama resultado, ya que es el resultado del valor base mas los adicionales. 
+        let resultado = 2000
+
+        //12.3 cada año de modelo anterior el seguro es mas barato por lo que debemos obtener la diferencia de años. para esto importamos desde helper la function que calcula la diferencia entre el año actual y el año puesto en el form y le damos a una variable el valor de ese resultado.14=>
+        const diferencia = obtenerDiferencia (year)
+        console.log(diferencia)
+
+
+        //12.4 por cada año menos, el valor del seguro se resta un 3%.
+        resultado -= (( diferencia * 3) * resultado) / 100
+        console.log(resultado)
+
+        //12.5 cada marca tendrá un incremento del valor del seguro:
+        
+        // americano 15%
+
+        // Asiatico 5%
+
+        // europeo 30%
+
+        // 12.6 agregamos los planes: 
+
+        // basico aumenta 20% el valor del seguro
+
+        // completo aumenta un 50 %
+
     }
 
     //13. creamos el styled component para error, lo que hacemos es crear un div, para después con un ternario mostrar el error con el estilo de este div.
@@ -96,6 +123,8 @@ const Fromulario = () => {
             /* 12. agregamos el onSubmit para que al dar enviar los datos captados se tomen  */ 
             onSubmit={cotizarSeguro}
         >
+            {/* 13.1 metemos el componente styled (div) y los mostramos con un ternario que se activa cuando la variable error es true. */}
+
             {error ? <Error> Todos los campos solicitados son necesarios </Error> : null }
 
             {/* 5.1 cambiamos los div por el componente styled Campo */}
