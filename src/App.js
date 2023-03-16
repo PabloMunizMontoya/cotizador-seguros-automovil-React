@@ -1,5 +1,6 @@
 import React from 'react'
 import Header from './components/Header';
+import Fromulario from './components/Formulario';
 
 //3.importamos style components
 import styled from '@emotion/styled'
@@ -10,6 +11,11 @@ const Contenedor = styled.div`
   margin: 0 auto;
   
 ` 
+// 4 creamos un contenedor para el formulario
+const ContenedorFormulario = styled.div`
+  background-color: #fff;
+  padding: 3rem;
+`
 
 function App() {
   return (
@@ -18,6 +24,11 @@ function App() {
       <Header
         titulo = 'Cotizador de Seguros'
       /> 
+
+      {/* 4.1 agregamos el contenedor creado  */}
+      <ContenedorFormulario>
+        <Fromulario/>
+      </ContenedorFormulario>
     </Contenedor>
   );
 }
