@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from '@emotion/styled'
 
 //5. creamos los componentes de estilo para los div
@@ -45,14 +45,42 @@ const Boton = styled.button`
     }
 `
 const Fromulario = () => {
+
+    //10. creamos el state para los datos
+    const [datos, guardarDatos ] = useState({
+        marca: '',
+        year: '',
+        plan: ''
+    })
+
+    //11. crear function para leer los datos del formulario y colocarlos en el state datos.
+    const obtenerInformacion = e => {
+        guardarDatos({
+            ...datos,
+            [e.target.name] : e.target.value
+        })
+    }
+
+    //10.1 extraemos los valores del estate con destructuring
+    const {marca, year, plan } = datos
+
     return ( 
         <form action="">
+
             {/* 5.1 cambiamos los div por el componente styled Campo */}
             <Campo>
+
                 {/* 6.1 cambiamos label por Label */}
                 <Label> Marca </Label>
+
                     {/* 7.1 reemplazamos los select por Select*/}
-                    <Select>
+                    {/* 10.3 le damos propiedades al select, vamos a llenar con estos datos el objeto datos creado en el use state  */}
+                    <Select
+                        name= 'marca'
+                        value= {marca}
+                        /* 11.1 disparamos la function con un onChange para capturar los datos */
+                        onChange= {obtenerInformacion}
+                    >
                         <option value=''> Seleccione </option>
                         <option value='americano'> Americano </option>
                         <option value='europeo'> Europeo </option>
@@ -63,7 +91,13 @@ const Fromulario = () => {
             </Campo>
             <Campo>
                 <Label> Año </Label>
-                    <Select>
+                    {/* 10.4 le damos propiedades al select, vamos a llenar con estos datos el objeto datos creado en el use state  */}
+                    <Select
+                        name='year'
+                        value={year}
+                        /* 11.2 disparamos la function con un onChange para capturar los datos */
+                        onChange= {obtenerInformacion}
+                    >
                         <option value='2013'> 2013 </option>
                         <option value='2014'> 2014 </option>
                         <option value='2015'> 2015 </option>
@@ -80,16 +114,25 @@ const Fromulario = () => {
             <Campo>
                 <Label> Plan </Label>
                     {/* 8.1 cambiamos el input por el componente styled */}
+                    {/* 10.5 le damos propiedades al radio, vamos a llenar con estos datos el objeto datos creado en el use state  */}
                     <InputRadio
-                    type='radio'
-                    name='plan'
-                    value='basico'
+                        type='radio'
+                        name='plan'
+                        value='basico'
+                        /* 10.5 le damos propiedades al radio, vamos a llenar con estos datos el objeto datos creado en el use state  */ 
+                        checked={plan === 'basico'}
+                        /* 11.3 disparamos la function con un onChange para capturar los datos */
+                        onChange= {obtenerInformacion}
                 /> Basico 
                 
                 <InputRadio
                     type='radio'
                     name='plan'
                     value='completo'
+                    /* 10.6 le damos propiedades al radio, vamos a llenar con estos datos el objeto datos creado en el use state  */ 
+                    checked={plan === 'completo'}
+                    /* 11.4 disparamos la function con un onChange para capturar los datos */
+                    onChange= {obtenerInformacion}
                 /> Completo
             </Campo>
             {/* 9.1 Cambiamos los styled components */}
