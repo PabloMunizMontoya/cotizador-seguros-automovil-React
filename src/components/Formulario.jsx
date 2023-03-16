@@ -53,19 +53,50 @@ const Fromulario = () => {
         plan: ''
     })
 
+    //12.2 creamos el estado de error con useState
+    const [error, guardarError] = useState(false)
+
     //11. crear function para leer los datos del formulario y colocarlos en el state datos.
     const obtenerInformacion = e => {
         guardarDatos({
             ...datos,
             [e.target.name] : e.target.value
+
+            
         })
     }
 
     //10.1 extraemos los valores del estate con destructuring
     const {marca, year, plan } = datos
 
+    //12.1 cuando el usuario presiona el submit dispara esta function.
+    const cotizarSeguro = e => {
+        e.preventDefault()
+
+        //validamos
+        if (marca.trim() === ''|| year.trim() === '' || plan.trim() === '') {
+            guardarError(true)
+            return
+        }
+
+        guardarError(false)
+    }
+
+    //13. creamos el styled component para error, lo que hacemos es crear un div, para después con un ternario mostrar el error con el estilo de este div.
+    const Error = styled.div`
+        background-color: red;
+        color: white;
+        padding: 1rem;
+        width:100%;
+        text-align: center;
+        margin-bottom: 2rem;
+    `
     return ( 
-        <form action="">
+        <form 
+            /* 12. agregamos el onSubmit para que al dar enviar los datos captados se tomen  */ 
+            onSubmit={cotizarSeguro}
+        >
+            {error ? <Error> Todos los campos solicitados son necesarios </Error> : null }
 
             {/* 5.1 cambiamos los div por el componente styled Campo */}
             <Campo>
@@ -98,6 +129,7 @@ const Fromulario = () => {
                         /* 11.2 disparamos la function con un onChange para capturar los datos */
                         onChange= {obtenerInformacion}
                     >
+                        <option value=''> Seleccione </option>
                         <option value='2013'> 2013 </option>
                         <option value='2014'> 2014 </option>
                         <option value='2015'> 2015 </option>
@@ -136,7 +168,7 @@ const Fromulario = () => {
                 /> Completo
             </Campo>
             {/* 9.1 Cambiamos los styled components */}
-            <Boton type='Boton'>Cotizar</Boton>
+            <Boton type='submit'>Cotizar</Boton>
         </form>
     );
 }
