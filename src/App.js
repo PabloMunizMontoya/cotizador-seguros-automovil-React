@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Fromulario from './components/Formulario';
 import Resumen from './components/Resumen';
 import Resultado from './components/Resultado';
+import Spinner from './components/Spinner';
 
 
 //3.importamos style components
@@ -36,6 +37,9 @@ function App() {
   //22. Extraemos también el valor cotizacion de resumen, para poder pasarla como prop al componente resultados.
   const {datos, cotizacion} = resumen
   console.log(datos)
+
+  //spinner. creamos la variable cargando y su function de estado con valor inicial false.
+  const[ cargando, guardarCargado ] = useState(false)
   
   return (
     //3.2 insertamos el componente con su estilo y adentro ponemos el header
@@ -49,13 +53,19 @@ function App() {
         <Fromulario
           /* 17.1 pasamos la function del useState como prop */
           guardarResumen = {guardarResumen}
+          // spinner. usamos la function del uses state para cambiar el calor de cargando desde el formulario, entonces se la pasamos como prop para activarla allí.
+          guardarCargado = {guardarCargado}
         />
+        
+        {/* spinner. renderizado el componente y usamos un ternario con la variable cargando que inicia como false */}
+        { cargando ? <Spinner/> : null}
+        
         {/* 18.1 => */}
         { datos ? <Resumen
           //19 pasamos los datos como prop al componente Resumen.
           datos = {datos}
         /> : null }
-        
+
         {/* 18.1 => */}
         { cotizacion ? <Resultado
           /* 22.1 pasamos la cotizacion como prop al componente resultados */

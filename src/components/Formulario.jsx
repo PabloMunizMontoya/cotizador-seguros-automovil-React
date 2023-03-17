@@ -46,7 +46,7 @@ const Boton = styled.button`
     }
 `
 //17.2 extraemos las props dadas en app 
-const Fromulario = ({guardarResumen}) => {
+const Fromulario = ({guardarResumen, guardarCargado}) => {
 
     //10. creamos el state para los datos
     const [datos, guardarDatos ] = useState({
@@ -111,12 +111,21 @@ const Fromulario = ({guardarResumen}) => {
         resultado = parseFloat ( incrementoPlan * resultado ).toFixed(2)
         console.log(resultado)
 
-        //17.3 total, aca usamos la function del useState que viene desde app para guardar el valor actual del seguro. el resultado dado por las functions anteriores y le pasamos el objeto datos con sus valores. de esta forma estos valores se imprimen en app. 
-        guardarResumen({
-            cotizacion: resultado,
-            datos 
-            
+        // spinner. usamos la function guardarCargando para cambiar el valor desde form de la variable cargando a true, una vez que la function cotizarSeguro sea disparada y llegue a esta instancia.
+        guardarCargado(true)
+
+        //spinner. usamos un setTimeout para configurar el tiempo que dura el spinner y dentro de este time out pasamos la function que guarda el valor del resumen, antes que se guarde y se muestre ese valor en pantalla, volvemos a cambiar el valor de cargando para dejar de mostrar el spinner.
+        setTimeout(() => {
+
+            guardarCargado(false)
+
+            //17.3 total, aca usamos la function del useState que viene desde app para guardar el valor actual del seguro. el resultado dado por las functions anteriores y le pasamos el objeto datos con sus valores. de esta forma estos valores se imprimen en app. 
+            guardarResumen({
+                cotizacion: resultado,
+                datos 
         })
+        }, 2000)
+        
     }
 
     //13. creamos el styled component para error, lo que hacemos es crear un div, para después con un ternario mostrar el error con el estilo de este div.
