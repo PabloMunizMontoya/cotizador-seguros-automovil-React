@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import styled from '@emotion/styled'
-import { obtenerDiferencia } from '../../src/helper'
+import { obtenerDiferencia, calcularMarca, obtenerPlan } from '../../src/helper'
 
 //5. creamos los componentes de estilo para los div
 const Campo = styled.div`
@@ -94,18 +94,21 @@ const Fromulario = () => {
         console.log(resultado)
 
         //12.5 cada marca tendrá un incremento del valor del seguro:
-        
         // americano 15%
-
         // Asiatico 5%
-
         // europeo 30%
+        //15.1 usamos la function calcularMarca importada desde helper, con el argumento marca para tener un valor que al multiplicar por resultado nos de el valor del seguro vs la marca. 
+        resultado = calcularMarca(marca) * resultado
+        console.log(resultado)
 
         // 12.6 agregamos los planes: 
-
         // basico aumenta 20% el valor del seguro
-
         // completo aumenta un 50 %
+        //16.1 agregamos la function desde helper obtenerPlan para obtener el resultado del calculo del valor del seguro según el plan elegido.
+        const incrementoPlan = obtenerPlan (plan)
+        // aca le decimos que el numero que va a devolver solo tenga dos decimales.
+        resultado = parseFloat ( incrementoPlan * resultado ).toFixed(2)
+        console.log(resultado)
 
     }
 
