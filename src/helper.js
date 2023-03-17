@@ -34,3 +34,8 @@ export function obtenerDiferencia(year) {
 export function obtenerPlan ( plan ) {
     return (plan === 'basico') ?  1.20 : 1.50
 }
+
+//21. Muestra la primer letra mayúscula
+export function primerMayuscula ( texto ) {
+    return texto.charAt(0).toUpperCase() + texto.slice(1)
+}
