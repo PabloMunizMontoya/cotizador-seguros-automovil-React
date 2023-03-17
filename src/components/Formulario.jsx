@@ -45,7 +45,8 @@ const Boton = styled.button`
         cursor: pointer;
     }
 `
-const Fromulario = () => {
+//17.2 extraemos las props dadas en app 
+const Fromulario = ({guardarResumen}) => {
 
     //10. creamos el state para los datos
     const [datos, guardarDatos ] = useState({
@@ -110,6 +111,12 @@ const Fromulario = () => {
         resultado = parseFloat ( incrementoPlan * resultado ).toFixed(2)
         console.log(resultado)
 
+        //17.3 total, aca usamos la function del useState que viene desde app para guardar el valor actual del seguro. el resultado dado por las functions anteriores y le pasamos el objeto datos con sus valores. de esta forma estos valores se imprimen en app. 
+        guardarResumen({
+            cotizacion: resultado,
+            datos 
+            
+        })
     }
 
     //13. creamos el styled component para error, lo que hacemos es crear un div, para después con un ternario mostrar el error con el estilo de este div.
